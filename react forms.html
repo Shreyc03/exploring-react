@@ -1,0 +1,142 @@
+<html>
+<head>
+    <title>React</title>
+    <script crossdomain src="https://unpkg.com/react@16/umd/react.development.js"> </script>
+    <script crossdomain src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"> </script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"> </script>
+    <style>
+        #root {
+            width: 100%;
+        }
+        .inner {
+            display: inline-block;
+            width: 33%;
+            text-align: center;
+        }
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 200px;
+            width: 300px;
+        }
+        h1,h2,h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body style="background-color : lightblue">
+    <div id = "root"></div>
+    <script type="text/babel">
+        var letterStyle = {
+                    fontSize:"20px",
+                            };
+        let totalcost = 0
+        let totalcost1 = 0
+        let totalcost2 = 0
+        let totalcost3 = 0
+        var current = new Date()
+        var currenttime = `${current.getHours()}:${current.getMinutes()}`
+        var deliverytime = `${current.getHours()+1}:${current.getMinutes()}`
+        var array_objects = [{"Image":"pizza.jpg","Name":"Pizza","Price": "200 INR"},
+                                     {"Image":"burger.jpg","Name":"Burger","Price": "150 INR"},
+                                     {"Image":"shawarma.jpg","Name":"Shawarma","Price": "250 INR"}]
+        class Pizza extends React.Component{
+            constructor(props){
+                super(props)
+                this.setqty=(el)=>{this.qty=el}
+            }
+            render(){
+                return(
+                    <div class = "inner" style={letterStyle}>
+                        <img src={this.props.src.Image}></img>
+                        Name: {this.props.src.Name}<br></br>
+                        Price: {this.props.src.Price}
+                        <form onInput = {this.add}><label>Qty:<input type = "text" ref = {this.setqty}/></label></form>
+                    </div>
+                );
+            }
+            add = () => {
+                event.preventDefault()
+                var q = parseInt(this.qty.value)
+                var tot = parseInt(this.props.src.Price)
+                totalcost1=tot*q
+            }
+        }
+        class Burger extends React.Component{
+            constructor(props){
+                super(props)
+                this.setqty=(el)=>{this.qty=el}
+            }
+            render(){
+                return(
+                    <div class = "inner" style={letterStyle}>
+                        <img src={this.props.src.Image}></img>
+                        Name: {this.props.src.Name}<br></br>
+                        Price: {this.props.src.Price}
+                        <form onInput = {this.add}><label>Qty:<input type = "text" ref = {this.setqty} /></label></form>
+                    </div>
+                );
+            }
+            add = () => {
+                event.preventDefault()
+                var q = parseInt(this.qty.value)
+                var tot = parseInt(this.props.src.Price)
+                totalcost2=tot*q
+            }
+        }
+        class Shawarma extends React.Component{
+            constructor(props){
+                super(props)
+                this.setqty=(el)=>{this.qty=el}
+            }
+            render(){
+                return(
+                    <div class = "inner" style={letterStyle}>
+                        <img src={this.props.src.Image}></img>
+                        Name: {this.props.src.Name}<br></br>
+                        Price: {this.props.src.Price}
+                        <form onInput = {this.add}><label>Qty:<input type = "text" ref = {this.setqty}/></label></form>
+                    </div>
+                );
+            }
+            add = () => {
+                event.preventDefault()
+                var q = parseInt(this.qty.value)
+                var tot = parseInt(this.props.src.Price)
+                totalcost3=tot*q
+            }
+        }
+        class SrcResult extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {total:totalcost1+totalcost2+totalcost3}
+            }
+            render(){    
+                return(
+                    <div>
+                        <h1>Welcome To Glen's Bakery</h1>
+                       <Pizza src = {array_objects[0]} />
+                       <Burger src = {array_objects[1]} />
+                       <Shawarma src = {array_objects[2]} />
+                       <h2>Total = {this.state.total} INR</h2> 
+                       <h2>Order Summary:</h2>
+                       <h3>Your Total Bill Summary is {this.state.total} INR</h3>
+                       <h3>Order Time : {currenttime}</h3>
+                       <h3>Expected Delivery Time : {deliverytime}</h3>
+                       <h3>Enjoy your Meal!</h3>  
+                    </div>
+                )
+            }
+            componentDidMount()
+            {
+                setInterval(() => {
+                    this.setState({total:totalcost1+totalcost2+totalcost3})
+                },10)
+            }  
+        }
+        ReactDOM.render(<SrcResult />,document.getElementById("root"));
+    </script>
+</body>
+</html>
